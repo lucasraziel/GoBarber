@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 import Youch from 'youch';
+import 'express-async-errors';
 import * as Sentry from '@sentry/node';
 import sentryConfig from './config/sentry';
-import 'express-async-errors';
 import routes from './routes';
 
 import './database';
@@ -20,6 +21,7 @@ class App {
 
   midlewares() {
     this.server.use(Sentry.Handlers.requestHandler());
+    this.server.use(cors);
     this.server.use(express.json());
     this.server.use(
       '/files',
